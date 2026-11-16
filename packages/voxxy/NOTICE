@@ -1,0 +1,40 @@
+voxxy
+Copyright voxxy contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+voxxy does not bundle model weights. The adapters below download them, or the data
+they need, at run time from the URLs in their configuration (by default Hugging Face,
+GitHub and jsDelivr). The works used are credited here.
+
+Moonshine tiny (speech-to-text weights, `onnx-community/moonshine-tiny-ONNX`)
+  Copyright Useful Sensors. MIT License.
+  https://huggingface.co/onnx-community/moonshine-tiny-ONNX
+  https://github.com/moonshine-ai/moonshine
+
+Paradee-8M v1.3 (text-to-speech weights and grapheme-to-phoneme data)
+  Copyright Sahil Mahendrakar. Apache License 2.0.
+  https://huggingface.co/sahilmahendrakar/Paradee-8M-v1.3
+  https://github.com/sahilmahendrakar/paradee
+  Paradee is distilled from Kokoro-82M. Its grapheme-to-phoneme model was learned
+  from the output of eSpeak NG (GPL-3.0). eSpeak NG itself is not used or included.
+
+Kokoro-82M (teacher model of Paradee; the `af_heart` voice comes from it)
+  Copyright hexgrad. Apache License 2.0.
+  https://huggingface.co/hexgrad/Kokoro-82M
+
+misaki (English dictionaries `us_gold.json` and `us_silver.json`; the dictionary
+lookup, stemming and number reading in `src/tts/paradee/lexicon.ts` are a port of
+`misaki/en.py`)
+  Copyright hexgrad. Apache License 2.0.
+  https://github.com/hexgrad/misaki
+  The repository does not document where the word lists came from.
+
+ONNX Runtime Web (inference runtime, WebAssembly build)
+  Copyright Microsoft Corporation. MIT License.
+  https://github.com/microsoft/onnxruntime
+  Its own dependencies are under MIT, Apache-2.0, BSD-3-Clause and ISC licences.
+
+pySBD (test cases only; no code is included and nothing from it is published)
+  Copyright (c) 2019 Nipun Sadvilkar. MIT License.
+  https://github.com/nipunsadvilkar/pySBD

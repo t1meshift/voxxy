@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcribe speech with voxxy</title>
+<h1>Transcribe speech</h1>
+<button id="mic">Download speech model (50 MB)</button>
+<p id="status" role="status"></p>
+<p id="transcript"></p>
+
+<script type="module">
+  import { createVoxxy, createMicRecorder } from "voxxy";
+  import { moonshineStt } from "voxxy/stt/moonshine";
+
+  const voice = createVoxxy();
+  voice.select(moonshineStt({ recorder: createMicRecorder() }));
+
+  const mic = document.querySelector("#mic");
+  const status = document.querySelector("#status");
+  const transcript = document.querySelector("#transcript");
+  let recording;
+
+  mic.onclick = async () => {
+    mic.disabled = true;
+    try {
+      if (recording) {
+        const clip = recording;
+        recording = undefined;
+        status.textContent = "Transcribing…";
+        transcript.textContent = await clip.stop();
+        status.textContent = transcript.textContent ? "" : "No speech detected.";
+      } else if (voice.getState().stt.status !== "ready") {
+        status.textContent = "Preparing speech recognition…";
+        await voice.models.optIn("stt");
+        await voice.load("stt");
+        status.textContent = "Ready to record.";
+      } else {
+        transcript.textContent = "";
+        recording = voice.listen();
+        status.textContent = "Recording…";
+      }
+    } catch (error) {
+      status.textContent = error.message;
+    } finally {
+      if (voice.getState().stt.status === "ready") {
+        mic.textContent = recording ? "Stop recording" : "Record";
+      }
+      mic.disabled = false;
+    }
+  };
+</script>
+</html>

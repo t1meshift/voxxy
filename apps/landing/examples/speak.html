@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speak text with voxxy</title>
+<h1>Speak text</h1>
+<label>Text <input id="text" value="Hello from voxxy."></label>
+<button id="speak">Download voice (32 MB) and speak</button>
+<p id="status" role="status"></p>
+
+<script type="module">
+  import { createVoxxy, createWebAudioPlayer } from "voxxy";
+  import { paradeeTts } from "voxxy/tts/paradee";
+
+  const voice = createVoxxy();
+  voice.select(paradeeTts({ player: createWebAudioPlayer() }));
+
+  const speak = document.querySelector("#speak");
+  const input = document.querySelector("#text");
+  const status = document.querySelector("#status");
+
+  speak.onclick = async () => {
+    const text = input.value.trim();
+    if (!text) return;
+    speak.disabled = true;
+    try {
+      status.textContent = "Preparing voice…";
+      await voice.unlock();
+      if (voice.getState().tts.status !== "ready") {
+        await voice.models.optIn("tts");
+        await voice.load("tts");
+        speak.textContent = "Speak";
+      }
+      status.textContent = "Speaking…";
+      await voice.speak(text);
+      status.textContent = "Done.";
+    } catch (error) {
+      status.textContent = error.message;
+    } finally {
+      speak.disabled = false;
+    }
+  };
+</script>
+</html>

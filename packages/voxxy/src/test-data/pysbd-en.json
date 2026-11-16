@@ -1,0 +1,370 @@
+[
+ {
+  "text": "Hello World. My name is Jonas.",
+  "expected": [
+   "Hello World.",
+   "My name is Jonas."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "What is your name? My name is Jonas.",
+  "expected": [
+   "What is your name?",
+   "My name is Jonas."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "There it is! I found it.",
+  "expected": [
+   "There it is!",
+   "I found it."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "My name is Jonas E. Smith.",
+  "expected": [
+   "My name is Jonas E. Smith."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Please turn to p. 55.",
+  "expected": [
+   "Please turn to p. 55."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Were Jane and co. at the party?",
+  "expected": [
+   "Were Jane and co. at the party?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "They closed the deal with Pitt, Briggs & Co. at noon.",
+  "expected": [
+   "They closed the deal with Pitt, Briggs & Co. at noon."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Let's ask Jane and co. They should know.",
+  "expected": [
+   "Let's ask Jane and co.",
+   "They should know."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "They closed the deal with Pitt, Briggs & Co. It closed yesterday.",
+  "expected": [
+   "They closed the deal with Pitt, Briggs & Co.",
+   "It closed yesterday."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I can see Mt. Fuji from here.",
+  "expected": [
+   "I can see Mt. Fuji from here."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "St. Michael's Church is on 5th st. near the light.",
+  "expected": [
+   "St. Michael's Church is on 5th st. near the light."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "That is JFK Jr.'s book.",
+  "expected": [
+   "That is JFK Jr.'s book."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I visited the U.S.A. last year.",
+  "expected": [
+   "I visited the U.S.A. last year."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I live in the E.U. How about you?",
+  "expected": [
+   "I live in the E.U.",
+   "How about you?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I live in the U.S. How about you?",
+  "expected": [
+   "I live in the U.S.",
+   "How about you?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I work for the U.S. Government in Virginia.",
+  "expected": [
+   "I work for the U.S. Government in Virginia."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I have lived in the U.S. for 20 years.",
+  "expected": [
+   "I have lived in the U.S. for 20 years."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "At 5 a.m. Mr. Smith went to the bank. He left the bank at 6 P.M. Mr. Smith then went to the store.",
+  "expected": [
+   "At 5 a.m. Mr. Smith went to the bank.",
+   "He left the bank at 6 P.M.",
+   "Mr. Smith then went to the store."
+  ],
+  "xfail": true
+ },
+ {
+  "text": "She has $100.00 in her bag.",
+  "expected": [
+   "She has $100.00 in her bag."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "She has $100.00. It is in her bag.",
+  "expected": [
+   "She has $100.00.",
+   "It is in her bag."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "He teaches science (He previously worked for 5 years as an engineer.) at the local University.",
+  "expected": [
+   "He teaches science (He previously worked for 5 years as an engineer.) at the local University."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Her email is Jane.Doe@example.com. I sent her an email.",
+  "expected": [
+   "Her email is Jane.Doe@example.com.",
+   "I sent her an email."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "The site is: https://www.example.50.com/new-site/awesome_content.html. Please check it out.",
+  "expected": [
+   "The site is: https://www.example.50.com/new-site/awesome_content.html.",
+   "Please check it out."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "She turned to him, 'This is great.' she said.",
+  "expected": [
+   "She turned to him, 'This is great.' she said."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "She turned to him, \"This is great.\" she said.",
+  "expected": [
+   "She turned to him, \"This is great.\" she said."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "She turned to him, \"This is great.\" She held the book out to show him.",
+  "expected": [
+   "She turned to him, \"This is great.\"",
+   "She held the book out to show him."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hello!! Long time no see.",
+  "expected": [
+   "Hello!!",
+   "Long time no see."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hello?? Who is there?",
+  "expected": [
+   "Hello??",
+   "Who is there?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hello!? Is that you?",
+  "expected": [
+   "Hello!?",
+   "Is that you?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hello?! Is that you?",
+  "expected": [
+   "Hello?!",
+   "Is that you?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1.) The first item 2.) The second item",
+  "expected": [
+   "1.) The first item",
+   "2.) The second item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1.) The first item. 2.) The second item.",
+  "expected": [
+   "1.) The first item.",
+   "2.) The second item."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1) The first item 2) The second item",
+  "expected": [
+   "1) The first item",
+   "2) The second item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1) The first item. 2) The second item.",
+  "expected": [
+   "1) The first item.",
+   "2) The second item."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1. The first item 2. The second item",
+  "expected": [
+   "1. The first item",
+   "2. The second item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1. The first item. 2. The second item.",
+  "expected": [
+   "1. The first item.",
+   "2. The second item."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "• 9. The first item • 10. The second item",
+  "expected": [
+   "• 9. The first item",
+   "• 10. The second item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "⁃9. The first item ⁃10. The second item",
+  "expected": [
+   "⁃9. The first item",
+   "⁃10. The second item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "a. The first item b. The second item c. The third list item",
+  "expected": [
+   "a. The first item",
+   "b. The second item",
+   "c. The third list item"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "You can find it at N°. 1026.253.553. That is where the treasure is.",
+  "expected": [
+   "You can find it at N°. 1026.253.553.",
+   "That is where the treasure is."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "She works at Yahoo! in the accounting department.",
+  "expected": [
+   "She works at Yahoo! in the accounting department."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "We make a good team, you and I. Did you see Albert I. Jones yesterday?",
+  "expected": [
+   "We make a good team, you and I.",
+   "Did you see Albert I. Jones yesterday?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Thoreau argues that by simplifying one’s life, “the laws of the universe will appear less complex. . . .”",
+  "expected": [
+   "Thoreau argues that by simplifying one’s life, “the laws of the universe will appear less complex. . . .”"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "\"Bohr [...] used the analogy of parallel stairways [...]\" (Smith 55).",
+  "expected": [
+   "\"Bohr [...] used the analogy of parallel stairways [...]\" (Smith 55)."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "If words are left off at the end of a sentence, and that is all that is omitted, indicate the omission with ellipsis marks (preceded and followed by a space) and then indicate the end of the sentence with a period . . . . Next sentence.",
+  "expected": [
+   "If words are left off at the end of a sentence, and that is all that is omitted, indicate the omission with ellipsis marks (preceded and followed by a space) and then indicate the end of the sentence with a period . . . .",
+   "Next sentence."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I never meant that.... She left the store.",
+  "expected": [
+   "I never meant that....",
+   "She left the store."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "I wasn’t really ... well, what I mean...see . . . what I'm saying, the thing is . . . I didn’t mean it.",
+  "expected": [
+   "I wasn’t really ... well, what I mean...see . . . what I'm saying, the thing is . . . I didn’t mean it."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "One further habit which was somewhat weakened . . . was that of combining words into self-interpreting compounds. . . . The practice was not abandoned. . . .",
+  "expected": [
+   "One further habit which was somewhat weakened . . . was that of combining words into self-interpreting compounds.",
+   ". . . The practice was not abandoned. . . ."
+  ],
+  "xfail": false
+ }
+]

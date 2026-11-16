@@ -1,0 +1,28 @@
+{
+  "name": "voxxy-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:site": "pnpm build && node apps/landing/assemble.mjs",
+    "typecheck": "pnpm -r typecheck && tsc -p e2e --noEmit",
+    "dev": "pnpm --filter @voxxy/stand dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:models": "playwright test --project=chromium --grep @models",
+    "test:e2e:chat": "playwright test --project=chromium --grep @live-chat",
+    "test:e2e:all-browsers": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0",
+    "voxxy": "workspace:*"
+  }
+}

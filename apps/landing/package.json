@@ -1,0 +1,17 @@
+{
+  "name": "@voxxy/landing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "voxxy": "workspace:*"
+  },
+  "devDependencies": {
+    "@voxxy/api-docs": "workspace:*",
+    "vite": "^8.3.8"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules
+dist
+_site/
+.DS_Store
+*.log
+.wrangler
+test-results
+playwright-report
+tasks/
+PRODUCT.md
+.impeccable/
+apps/landing/api/

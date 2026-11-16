@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["../../packages/voxxy/src"],
+  "exclude": ["../../packages/voxxy/src/**/*.test.ts", "../../packages/voxxy/src/test-utils", "../../packages/voxxy/src/**/*.bench.test.ts"]
+}

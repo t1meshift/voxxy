@@ -1,0 +1,42 @@
+[
+ {
+  "text": "¿Cómo está hoy? Espero que muy bien.",
+  "expected": [
+   "¿Cómo está hoy?",
+   "Espero que muy bien."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "¡Hola señorita! Espero que muy bien.",
+  "expected": [
+   "¡Hola señorita!",
+   "Espero que muy bien."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hola Srta. Ledesma. Buenos días, soy el Lic. Naser Pastoriza, y él es mi padre, el Dr. Naser.",
+  "expected": [
+   "Hola Srta. Ledesma.",
+   "Buenos días, soy el Lic. Naser Pastoriza, y él es mi padre, el Dr. Naser."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "¡La casa cuesta $170.500.000,00! ¡Muy costosa! Se prevé una disminución del 12.5% para el próximo año.",
+  "expected": [
+   "¡La casa cuesta $170.500.000,00!",
+   "¡Muy costosa!",
+   "Se prevé una disminución del 12.5% para el próximo año."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "«Ninguna mente extraordinaria está exenta de un toque de demencia.», dijo Aristóteles.",
+  "expected": [
+   "«Ninguna mente extraordinaria está exenta de un toque de demencia.», dijo Aristóteles."
+  ],
+  "xfail": false
+ }
+]

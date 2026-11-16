@@ -1,0 +1,13 @@
+{
+  "name": "@voxxy/api-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "node --check build.mjs"
+  },
+  "devDependencies": {
+    "typedoc": "0.28.20",
+    "typescript": "~6.0.3"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "voxxy",
+  "version": "0.0.0",
+  "description": "In-browser speech-to-text and text-to-speech. No server involved.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "default": "./dist/testing.js"
+    },
+    "./stt/moonshine": {
+      "types": "./dist/stt/moonshine.d.ts",
+      "default": "./dist/stt/moonshine.js"
+    },
+    "./stt/moonshine.worker": "./dist/stt/moonshine.worker.js",
+    "./stt/platform": {
+      "types": "./dist/stt/platform.d.ts",
+      "default": "./dist/stt/platform.js"
+    },
+    "./tts/paradee": {
+      "types": "./dist/tts/paradee.d.ts",
+      "default": "./dist/tts/paradee.js"
+    },
+    "./tts/paradee.worker": "./dist/tts/paradee.worker.js",
+    "./tts/platform": {
+      "types": "./dist/tts/platform.d.ts",
+      "default": "./dist/tts/platform.js"
+    },
+    "./stt/dummy.worker": "./dist/stt/dummy.worker.js",
+    "./tts/dummy.worker": "./dist/tts/dummy.worker.js",
+    "./serve": {
+      "types": "./dist/serve.d.ts",
+      "default": "./dist/serve.js"
+    },
+    "./stt/dummy": {
+      "types": "./dist/stt/dummy.d.ts",
+      "default": "./dist/stt/dummy.js"
+    },
+    "./tts/dummy": {
+      "types": "./dist/tts/dummy.d.ts",
+      "default": "./dist/tts/dummy.js"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsdown": "^0.23.7"
+  },
+  "dependencies": {
+    "onnxruntime-web": "^1.31.1"
+  }
+}

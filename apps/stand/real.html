@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>voxxy stand: real engines</title>
+    <style>
+      body { font: 15px/1.5 system-ui, sans-serif; max-width: 900px; margin: 0 auto; padding: 16px; }
+      h2 { margin: 28px 0 8px; font-size: 17px; }
+      textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; }
+      label { margin-right: 16px; white-space: nowrap; }
+      button { font: inherit; padding: 4px 10px; }
+      pre { font: 13px/1.5 ui-monospace, monospace; white-space: pre-wrap; margin: 8px 0; }
+      #talk { min-width: 140px; user-select: none; touch-action: none; }
+      #talk.on { background: crimson; color: white; }
+    </style>
+  </head>
+  <body>
+    <h1>voxxy stand: real engines</h1>
+    <p>Moonshine tiny (speech to text) and Paradee 8M (text to speech), downloaded on request, running in the browser. Serve it with <code>pnpm --filter @voxxy/stand serve</code>; opening this file directly does not work.</p>
+
+    <h2>1. Get the models</h2>
+    <p>
+      <button id="optin">Download models</button>
+      <button id="load" disabled>Load</button>
+      <button id="forget">Delete downloaded models</button>
+    </p>
+    <div id="downloads"></div>
+    <pre id="active"></pre>
+
+    <h2>2. Speak your own text</h2>
+    <p>
+      <label>Try a tricky text
+        <select id="preset"></select>
+      </label>
+    </p>
+    <textarea id="text" rows="7">In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since. “Whenever you feel like criticizing anyone,” he told me, “just remember that all the people in this world haven’t had the advantages that you’ve had.” He didn’t say any more, but we’ve always been unusually communicative in a reserved way, and I understood that he meant a great deal more than that.</textarea>
+    <p>
+      <label>Voice
+        <select id="voice">
+          <option value="af_heart">af_heart (female)</option>
+          <option value="am_puck">am_puck (male)</option>
+        </select>
+      </label>
+      <label>Speed <input id="speedRange" type="range" min="0.6" max="1.4" step="0.05" value="1" /> <output id="speedValue">1.00</output></label>
+      <label>Chunking
+        <select id="chunking">
+          <option value="sentences">one sentence at a time</option>
+          <option value="packed" selected>short first chunk, then about 120 characters</option>
+          <option value="big">short first chunk, then about 300 characters</option>
+        </select>
+      </label>
+    </p>
+    <p>
+      <button id="speakText" disabled>Speak the text</button>
+      <button id="stopText" disabled>Stop</button>
+    </p>
+    <pre id="speakInfo"></pre>
+    <details open>
+      <summary>How it was cut (one line per chunk)</summary>
+      <pre id="chunkLog"></pre>
+    </details>
+
+    <h2>3. Speak to it</h2>
+    <p>
+      <label>Source
+        <select id="source">
+          <option value="clip">recorded clip (JFK, 11 s)</option>
+          <option value="mic">microphone</option>
+        </select>
+      </label>
+      <button id="talk" disabled>Hold to talk</button>
+    </p>
+    <pre id="heard"></pre>
+
+    <h2>Quick checks</h2>
+    <p>
+      <button id="speak" disabled>Speak a sentence</button>
+      <button id="clip" disabled>Transcribe the sample clip</button>
+      <button id="stream" disabled>Speak a streamed reply</button>
+    </p>
+    <pre id="metrics"></pre>
+
+    <h2>Measure this device</h2>
+    <p>
+      Run after “Load”. Add <code>?volume=0</code> to keep it quiet.
+      <br /><button id="measure" disabled>Measure</button>
+      <button id="copyMeasure">Copy the JSON</button>
+    </p>
+    <pre id="measureOut"></pre>
+
+    <h2>Browser speech fallback</h2>
+    <p>Browser services may receive audio or text. Select “On-device only” to require a local engine.</p>
+    <p>
+      <label>Policy
+        <select id="platformPolicy">
+          <option value="any">Allow browser services</option>
+          <option value="local-only">On-device only</option>
+          <option value="off">Off</option>
+        </select>
+      </label>
+      <button id="platformLoad">Load browser speech</button>
+      <button id="platformInstall" hidden>Install browser language pack</button>
+    </p>
+    <pre id="platformState" aria-live="polite"></pre>
+    <p>
+      <button id="platformTalk" disabled>Start listening</button>
+      <button id="platformSpeak" disabled>Speak the text above</button>
+      <button id="platformStop" disabled>Stop speech</button>
+    </p>
+    <pre id="platformResult" aria-live="polite"></pre>
+    <script type="module" src="/src/real.ts"></script>
+    <script type="module" src="/src/platform.ts"></script>
+  </body>
+</html>

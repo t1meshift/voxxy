@@ -1,0 +1,199 @@
+[
+ {
+  "text": "«Ninguna mente extraordinaria está exenta de un toque de demencia», dijo Aristóteles. Pablo, ¿adónde vas? ¡¿Qué viste?!",
+  "expected": [
+   "«Ninguna mente extraordinaria está exenta de un toque de demencia», dijo Aristóteles.",
+   "Pablo, ¿adónde vas?",
+   "¡¿Qué viste?!"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Admón. es administración o me equivoco.",
+  "expected": [
+   "Admón. es administración o me equivoco."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "¡Hola Srta. Ledesma! ¿Cómo está hoy? Espero que muy bien.",
+  "expected": [
+   "¡Hola Srta. Ledesma!",
+   "¿Cómo está hoy?",
+   "Espero que muy bien."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Buenos días, soy el Lic. Naser Pastoriza, y él es mi padre, el Dr. Naser.",
+  "expected": [
+   "Buenos días, soy el Lic. Naser Pastoriza, y él es mi padre, el Dr. Naser."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "He apuntado una cita para la siguiente fecha: Mar. 23 de Nov. de 2014. Gracias.",
+  "expected": [
+   "He apuntado una cita para la siguiente fecha: Mar. 23 de Nov. de 2014.",
+   "Gracias."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Núm. de tel: 351.123.465.4. Envíe mis saludos a la Sra. Rescia.",
+  "expected": [
+   "Núm. de tel: 351.123.465.4.",
+   "Envíe mis saludos a la Sra. Rescia."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Cero en la escala Celsius o de grados centígrados (0 °C) se define como el equivalente a 273.15 K, con una diferencia de temperatura de 1 °C equivalente a una diferencia de 1 Kelvin. Esto significa que 100 °C, definido como el punto de ebullición del agua, se define como el equivalente a 373.15 K.",
+  "expected": [
+   "Cero en la escala Celsius o de grados centígrados (0 °C) se define como el equivalente a 273.15 K, con una diferencia de temperatura de 1 °C equivalente a una diferencia de 1 Kelvin.",
+   "Esto significa que 100 °C, definido como el punto de ebullición del agua, se define como el equivalente a 373.15 K."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Durante la primera misión del Discovery (30 Ago. 1984 15:08.10) tuvo lugar el lanzamiento de dos satélites de comunicación, el nombre de esta misión fue STS-41-D.",
+  "expected": [
+   "Durante la primera misión del Discovery (30 Ago. 1984 15:08.10) tuvo lugar el lanzamiento de dos satélites de comunicación, el nombre de esta misión fue STS-41-D."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Frase del gran José Hernández: \"Aquí me pongo a cantar / al compás de la vigüela, / que el hombre que lo desvela / una pena estrordinaria, / como la ave solitaria / con el cantar se consuela. / [...] \".",
+  "expected": [
+   "Frase del gran José Hernández: \"Aquí me pongo a cantar / al compás de la vigüela, / que el hombre que lo desvela / una pena estrordinaria, / como la ave solitaria / con el cantar se consuela. / [...] \"."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Citando a Criss Jami «Prefiero ser un artista a ser un líder, irónicamente, un líder tiene que seguir las reglas.», lo cual parece muy acertado.",
+  "expected": [
+   "Citando a Criss Jami «Prefiero ser un artista a ser un líder, irónicamente, un líder tiene que seguir las reglas.», lo cual parece muy acertado."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Cuando llegué, le estaba dando ejercicios a los niños, uno de los cuales era \"3 + (14/7).x = 5\". ¿Qué te parece?",
+  "expected": [
+   "Cuando llegué, le estaba dando ejercicios a los niños, uno de los cuales era \"3 + (14/7).x = 5\".",
+   "¿Qué te parece?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Se le pidió a los niños que leyeran los párrf. 5 y 6 del art. 4 de la constitución de los EE. UU..",
+  "expected": [
+   "Se le pidió a los niños que leyeran los párrf. 5 y 6 del art. 4 de la constitución de los EE. UU.."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Una de las preguntas realizadas en la evaluación del día Lun. 15 de Mar. fue la siguiente: \"Alumnos, ¿cuál es el resultado de la operación 1.1 + 4/5?\". Disponían de 1 min. para responder esa pregunta.",
+  "expected": [
+   "Una de las preguntas realizadas en la evaluación del día Lun. 15 de Mar. fue la siguiente: \"Alumnos, ¿cuál es el resultado de la operación 1.1 + 4/5?\".",
+   "Disponían de 1 min. para responder esa pregunta."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "La temperatura del motor alcanzó los 120.5°C. Afortunadamente, pudo llegar al final de carrera.",
+  "expected": [
+   "La temperatura del motor alcanzó los 120.5°C.",
+   "Afortunadamente, pudo llegar al final de carrera."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "El volumen del cuerpo es 3m³. ¿Cuál es la superficie de cada cara del prisma?",
+  "expected": [
+   "El volumen del cuerpo es 3m³.",
+   "¿Cuál es la superficie de cada cara del prisma?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "La habitación tiene 20.55m². El living tiene 50.0m².",
+  "expected": [
+   "La habitación tiene 20.55m².",
+   "El living tiene 50.0m²."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1°C corresponde a 33.8°F. ¿A cuánto corresponde 35°C?",
+  "expected": [
+   "1°C corresponde a 33.8°F.",
+   "¿A cuánto corresponde 35°C?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hamilton ganó el último gran premio de Fórmula 1, luego de 1:39:02.619 Hs. de carrera, segundo resultó Massa, a una diferencia de 2.5 segundos. De esta manera se consagró ¡Campeón mundial!",
+  "expected": [
+   "Hamilton ganó el último gran premio de Fórmula 1, luego de 1:39:02.619 Hs. de carrera, segundo resultó Massa, a una diferencia de 2.5 segundos.",
+   "De esta manera se consagró ¡Campeón mundial!"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "¡La casa cuesta $170.500.000,00! ¡Muy costosa! Se prevé una disminución del 12.5% para el próximo año.",
+  "expected": [
+   "¡La casa cuesta $170.500.000,00!",
+   "¡Muy costosa!",
+   "Se prevé una disminución del 12.5% para el próximo año."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "El corredor No. 103 arrivó 4°.",
+  "expected": [
+   "El corredor No. 103 arrivó 4°."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Hoy es 27/04/2014, y es mi cumpleaños. ¿Cuándo es el tuyo?",
+  "expected": [
+   "Hoy es 27/04/2014, y es mi cumpleaños.",
+   "¿Cuándo es el tuyo?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Aquí está la lista de compras para el almuerzo: 1.Helado, 2.Carne, 3.Arroz. ¿Cuánto costará? Quizás $12.5.",
+  "expected": [
+   "Aquí está la lista de compras para el almuerzo: 1.Helado, 2.Carne, 3.Arroz.",
+   "¿Cuánto costará?",
+   "Quizás $12.5."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "1 + 1 es 2. 2 + 2 es 4. El auto es de color rojo.",
+  "expected": [
+   "1 + 1 es 2.",
+   "2 + 2 es 4.",
+   "El auto es de color rojo."
+  ],
+  "xfail": false
+ },
+ {
+  "text": "La máquina viajaba a 100 km/h. ¿En cuánto tiempo recorrió los 153 Km.?",
+  "expected": [
+   "La máquina viajaba a 100 km/h.",
+   "¿En cuánto tiempo recorrió los 153 Km.?"
+  ],
+  "xfail": false
+ },
+ {
+  "text": "Explora oportunidades de carrera en el área de Salud en el Hospital de Northern en Mt. Kisco.",
+  "expected": [
+   "Explora oportunidades de carrera en el área de Salud en el Hospital de Northern en Mt. Kisco."
+  ],
+  "xfail": false
+ }
+]

@@ -1,0 +1,134 @@
+name: Release
+
+# One release is one tag, vX.Y.Z, on a commit that is on main. The tag must match the version in
+# packages/voxxy/package.json. From the tag this workflow:
+#   1. builds and tests the exact commit,
+#   2. publishes the package to npm (with provenance),
+#   3. creates the GitHub Release with the package tarball attached,
+#   4. deploys the site (landing, examples, API reference) to GitHub Pages.
+# A tag with a suffix (v0.2.0-rc.1) is a prerelease: npm dist-tag `next`, GitHub prerelease, and no Pages deploy.
+#
+# One-time setup, done by the repository owner (see RELEASING.md):
+#   - secret NPM_TOKEN: an npm automation token allowed to publish `voxxy`
+#   - Settings -> Pages -> Source: GitHub Actions
+#   - optional repository variable VITE_CHAT_ENDPOINT, used by the landing's chat
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check the tag
+        id: meta
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          package="$(node -p "require('./packages/voxxy/package.json').version")"
+          if [ "$version" != "$package" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match packages/voxxy/package.json ($package)"
+            exit 1
+          fi
+          git fetch origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::$GITHUB_REF_NAME is not on main"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          case "$version" in *-*) echo "prerelease=true" >> "$GITHUB_OUTPUT" ;; *) echo "prerelease=false" >> "$GITHUB_OUTPUT" ;; esac
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the site and the package tarball
+        run: pnpm build:site
+        env:
+          VITE_CHAT_ENDPOINT: ${{ vars.VITE_CHAT_ENDPOINT }}
+      - run: pnpm typecheck
+      - run: pnpm test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+          if-no-files-found: error
+
+  npm:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # provenance
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: Publish
+        run: |
+          if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then tag=next; else tag=latest; fi
+          npm publish ./site/voxxy.tgz --provenance --access public --tag "$tag"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  github-release:
+    needs: [build, npm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+      - name: Create the release
+        run: |
+          cp site/voxxy.tgz "voxxy-${{ needs.build.outputs.version }}.tgz"
+          flags="--generate-notes --verify-tag"
+          if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then flags="$flags --prerelease"; fi
+          gh release create "$GITHUB_REF_NAME" "voxxy-${{ needs.build.outputs.version }}.tgz" \
+            --repo "$GITHUB_REPOSITORY" --title "voxxy ${{ needs.build.outputs.version }}" $flags
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  pages:
+    needs: [build, npm]
+    if: needs.build.outputs.prerelease == 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
