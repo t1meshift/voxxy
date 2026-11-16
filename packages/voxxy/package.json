@@ -1,8 +1,19 @@
 {
   "name": "voxxy",
-  "version": "0.0.0",
+  "version": "0.1.0-rc.1",
   "description": "In-browser speech-to-text and text-to-speech. No server involved.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t1meshift/voxxy.git",
+    "directory": "packages/voxxy"
+  },
+  "homepage": "https://github.com/t1meshift/voxxy#readme",
+  "bugs": "https://github.com/t1meshift/voxxy/issues",
+  "keywords": ["speech-to-text", "text-to-speech", "stt", "tts", "on-device", "onnx", "webassembly", "voice", "browser"],
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "sideEffects": false,
   "files": [
