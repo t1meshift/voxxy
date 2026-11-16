@@ -229,6 +229,42 @@ describe("web audio player: unlocking", () => {
     expect(off.silentSwitchUsed).toBeNull();
   });
 
+  it("on iOS, the first unlock() after the page was in the background starts a fresh context", async () => {
+    vi.stubGlobal("navigator", { userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X)", platform: "iPhone", maxTouchPoints: 5, audioSession: { type: "auto" } });
+    const page = new EventTarget() as EventTarget & { visibilityState: DocumentVisibilityState };
+    page.visibilityState = "visible";
+    vi.stubGlobal("document", page);
+    const contexts: Array<ReturnType<typeof fakeContext>> = [];
+    const player = createWebAudioPlayer({ createContext: () => (contexts.push(fakeContext()), contexts.at(-1)!.asAudioContext()) });
+
+    await player.unlock();
+    await player.unlock(); // Still in the foreground: the same context.
+    expect(contexts).toHaveLength(1);
+
+    page.visibilityState = "hidden";
+    page.dispatchEvent(new Event("visibilitychange"));
+    page.visibilityState = "visible";
+    page.dispatchEvent(new Event("visibilitychange"));
+    await player.unlock();
+    expect(contexts).toHaveLength(2);
+    expect(contexts[0]!.context.state).toBe("closed");
+    expect(player.contextState).toBe("running");
+  });
+
+  it("keeps the context while something plays, even after the background", async () => {
+    vi.stubGlobal("navigator", { userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X)", platform: "iPhone", maxTouchPoints: 5, audioSession: { type: "auto" } });
+    const page = new EventTarget() as EventTarget & { visibilityState: DocumentVisibilityState };
+    page.visibilityState = "visible";
+    vi.stubGlobal("document", page);
+    const fake = fakeContext("running");
+    const player = createWebAudioPlayer({ createContext: fake.asAudioContext });
+    void player.play(pcm(1), 24000, signal());
+    page.visibilityState = "hidden";
+    page.dispatchEvent(new Event("visibilitychange"));
+    await player.unlock();
+    expect(fake.context.state).toBe("running");
+  });
+
   it("dispose() stops what is playing and closes the context", async () => {
     const fake = fakeContext("running");
     const player = createWebAudioPlayer({ createContext: fake.asAudioContext });

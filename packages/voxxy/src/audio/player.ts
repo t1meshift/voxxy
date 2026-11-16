@@ -125,8 +125,23 @@ export function createWebAudioPlayer(options: WebAudioPlayerOptions = {}): WebAu
   let silentElement: HTMLAudioElement | null = null;
   let silentUsed: "audio-session" | "audio-element" | null = null;
 
+  // iOS (home-screen web apps above all) can leave a context that went through the background "running" but
+  // silent: the clock advances, buffers end on time, nothing comes out. Such a context is replaced on the next
+  // unlock(), which runs inside a gesture and so can start a fresh one.
+  let wentToBackground = false;
+  const onVisibilityChange = () => {
+    if (document.visibilityState === "hidden" && context) wentToBackground = true;
+  };
+  let watchingVisibility = false;
+  function watchVisibility(): void {
+    if (watchingVisibility || typeof document === "undefined" || !isIOS()) return;
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    watchingVisibility = true;
+  }
+
   function getContext(): AudioContext {
     if (!context || context.state === "closed") {
+      watchVisibility();
       context = options.createContext?.() ?? new (window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)({ latencyHint: "playback" });
       master = context.createGain();
       master.gain.value = Math.min(1, Math.max(0, options.volume ?? 1));
@@ -196,6 +211,13 @@ export function createWebAudioPlayer(options: WebAudioPlayerOptions = {}): WebAu
     },
     async unlock() {
       // Everything up to the first await runs inside the gesture.
+      if (wentToBackground && active.size === 0) {
+        wentToBackground = false;
+        const stale = context;
+        context = null;
+        master = null;
+        void stale?.close().catch(() => {});
+      }
       const ctx = getContext();
       const resumed = resume(ctx);
       applySilentSwitch();
@@ -265,6 +287,9 @@ export function createWebAudioPlayer(options: WebAudioPlayerOptions = {}): WebAu
       silentElement?.pause();
       silentElement = null;
       silentUsed = null;
+      if (watchingVisibility) document.removeEventListener("visibilitychange", onVisibilityChange);
+      watchingVisibility = false;
+      wentToBackground = false;
       const closing = context;
       context = null;
       master = null;
