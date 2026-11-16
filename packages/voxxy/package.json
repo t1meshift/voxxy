@@ -1,6 +1,6 @@
 {
   "name": "voxxy",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0",
   "description": "In-browser speech-to-text and text-to-speech. No server involved.",
   "license": "Apache-2.0",
   "repository": {
