@@ -132,6 +132,37 @@ async function createCapture(context: AudioContext, onSamples: (samples: Float32
   };
 }
 
+interface AudioSessionLike {
+  type: string;
+}
+const audioSession = (): AudioSessionLike | null =>
+  typeof navigator !== "undefined" ? ((navigator as unknown as { audioSession?: AudioSessionLike }).audioSession ?? null) : null;
+
+/**
+ * Safari refuses `getUserMedia` while the page's audio session is "playback" (which the player sets so that speech
+ * is not muted by the silent switch) with "AudioSession category is not compatible with audio capture".
+ * Switches to "play-and-record" for the recording and returns a function that puts the previous type back.
+ */
+function enterRecordingSession(): () => void {
+  const session = audioSession();
+  if (!session) return () => {};
+  let previous: string;
+  try {
+    previous = session.type;
+    if (previous === "play-and-record") return () => {};
+    session.type = "play-and-record";
+  } catch {
+    return () => {};
+  }
+  return () => {
+    try {
+      session.type = previous;
+    } catch {
+      // Not restorable here; the player sets its own type again on the next unlock().
+    }
+  };
+}
+
 async function openStream(constraints: MediaTrackConstraints | undefined): Promise<MediaStream> {
   if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
     throw new MicrophoneError("unsupported", "Microphone capture is not available here (is the page served over https?)");
@@ -166,10 +197,17 @@ export function createMicRecorder(options: MicRecorderOptions = {}): MicRecorder
 
   const stopTracks = (stream: MediaStream | null) => stream?.getTracks().forEach((track) => track.stop());
 
+  let leaveSession: (() => void) | null = null;
+  const restoreSession = () => {
+    leaveSession?.();
+    leaveSession = null;
+  };
+
   function releaseIdle(): void {
     clearTimeout(idleTimer);
     stopTracks(idleStream);
     idleStream = null;
+    restoreSession();
   }
 
   async function ensureContext(): Promise<AudioContext> {
@@ -205,13 +243,17 @@ export function createMicRecorder(options: MicRecorderOptions = {}): MicRecorder
           idleTimer = setTimeout(releaseIdle, idleReleaseMs);
         } else {
           stopTracks(stream);
+          restoreSession();
         }
+      } else {
+        restoreSession();
       }
       releaseClaim();
     };
 
     try {
       clearTimeout(idleTimer);
+      leaveSession ??= enterRecordingSession(); // Before getUserMedia, and still inside the gesture.
       // iOS only lets an AudioContext start while the user gesture is still live, and the getUserMedia permission
       // prompt below consumes it. So create and resume the context first, synchronously from the press.
       const contextReady = ensureContext();
