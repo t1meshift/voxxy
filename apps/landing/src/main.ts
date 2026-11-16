@@ -195,8 +195,9 @@ async function prepare(kind: Kind): Promise<boolean> {
     status(voiceNote, kind === "stt" ? "Select Record, then speak English." : "Spoken replies are on.");
     return true;
   } catch (error) {
-    const message = engineControls[kind].select.value !== "worker" && error instanceof Error
-      ? error.message : "Couldn’t enable voice. Select the control to retry.";
+    console.error("voxxy prepare failed", error);
+    const message = error instanceof Error && error.message
+      ? `Couldn’t enable voice: ${error.message}` : "Couldn’t enable voice. Select the control to retry.";
     status(voiceNote, message, true);
     return false;
   } finally {
@@ -230,7 +231,8 @@ async function finishRecording(): Promise<void> {
     } else if (error instanceof MicrophoneError && error.code === "permission-denied") {
       status(voiceNote, "Allow microphone access in your browser and try again.", true);
     } else {
-      status(voiceNote, engine !== "worker" && error instanceof Error
+      console.error("voxxy recording failed", error);
+      status(voiceNote, error instanceof Error && error.message
         ? error.message : "Couldn’t record speech. Check microphone access and try again.", true);
     }
   } finally {
@@ -253,8 +255,10 @@ mic.addEventListener("click", async () => {
   try {
     recording = voice.listen();
     status(voiceNote, engineControls.stt.select.value === "worker" ? "Recording in English…" : "Starting microphone…");
-  } catch {
-    status(voiceNote, "Couldn’t start the microphone. Check browser permissions.", true);
+  } catch (error) {
+    console.error("voxxy listen failed", error);
+    status(voiceNote, error instanceof Error && error.message
+      ? `Couldn’t start the microphone: ${error.message}` : "Couldn’t start the microphone. Check browser permissions.", true);
   }
   renderControls();
 });

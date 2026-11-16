@@ -177,7 +177,11 @@ export function createMicRecorder(options: MicRecorderOptions = {}): MicRecorder
       const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       context = new Ctor({ latencyHint: "interactive" });
     }
-    if (context.state === "suspended") await context.resume();
+    // iOS Safari also reports "interrupted" (after a call, a route change, or our own suspend()), so anything but "running" needs a resume.
+    if (context.state !== "running") {
+      // A resume() that cannot get a user gesture stays pending forever on iOS; don't let it hang start().
+      await Promise.race([context.resume().catch(() => {}), new Promise<void>((resolve) => setTimeout(resolve, 1000))]);
+    }
     return context;
   }
 
@@ -208,10 +212,16 @@ export function createMicRecorder(options: MicRecorderOptions = {}): MicRecorder
 
     try {
       clearTimeout(idleTimer);
+      // iOS only lets an AudioContext start while the user gesture is still live, and the getUserMedia permission
+      // prompt below consumes it. So create and resume the context first, synchronously from the press.
+      const contextReady = ensureContext();
+      contextReady.catch(() => {});
       stream = idleStream ?? (await openStream(options.constraints));
       idleStream = null;
       signal?.throwIfAborted();
-      const ctx = await ensureContext();
+      const ctx = await contextReady;
+      // The permission prompt or the new input route can leave the context suspended again; try once more.
+      if (ctx.state !== "running") await ensureContext();
       signal?.throwIfAborted();
 
       const resampler = new Resampler(ctx.sampleRate, STT_SAMPLE_RATE);
