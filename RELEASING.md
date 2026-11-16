@@ -29,7 +29,7 @@ The version shown on the site and in the API reference is read from `packages/vo
 
 ## One-time setup
 
-- **npm:** create an automation token that may publish `voxxy` and save it as the repository secret `NPM_TOKEN`. The job runs in the environment `npm`; add required reviewers to that environment if you want a manual approval before each publish.
+- **npm:** publishing uses trusted publishing (OIDC), so no token is stored. On npmjs.com, in the settings of the `voxxy` package, add a trusted publisher: GitHub Actions, user `t1meshift`, repository `voxxy`, workflow `release.yml`, environment `npm`, with `npm publish` allowed. The first version of a new package has to be published by hand or with a short-lived token, because the setting exists only once the package does. The job runs in the environment `npm`; add required reviewers to that environment if you want a manual approval before each publish.
 - **Pages:** Settings, Pages, Source: GitHub Actions.
 - **Chat endpoint (optional):** the repository variable `VITE_CHAT_ENDPOINT`, used by the landing's chat.
 

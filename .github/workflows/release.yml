@@ -9,7 +9,8 @@ name: Release
 # A tag with a suffix (v0.2.0-rc.1) is a prerelease: npm dist-tag `next`, GitHub prerelease, and no Pages deploy.
 #
 # One-time setup, done by the repository owner (see RELEASING.md):
-#   - secret NPM_TOKEN: an npm automation token allowed to publish `voxxy`
+#   - npm: a trusted publisher for `voxxy` (GitHub Actions, this repository, workflow release.yml, environment npm,
+#     direct publish allowed). No npm token is stored anywhere: the publish job proves its identity with OIDC.
 #   - Settings -> Pages -> Source: GitHub Actions
 #   - optional repository variable VITE_CHAT_ENDPOINT, used by the landing's chat
 
@@ -53,8 +54,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
-          cache: pnpm
+          node-version: 22 # No dependency cache here: a release build must not reuse a cache a pull request could have written.
       - run: pnpm install --frozen-lockfile
       - name: Build the site and the package tarball
         run: pnpm build:site
@@ -82,14 +82,22 @@ jobs:
           path: site
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
+      - name: Check the npm version
+        # Trusted publishing needs npm 11.5.1 or newer.
+        run: |
+          need=11.5.1
+          have="$(npm --version)"
+          if [ "$(printf '%s\n' "$need" "$have" | sort -V | head -n1)" != "$need" ]; then
+            npm install -g "npm@^11.5.1"
+          fi
+          npm --version
       - name: Publish
+        # Authenticated by OIDC (id-token: write above), not by a token.
         run: |
           if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then tag=next; else tag=latest; fi
           npm publish ./site/voxxy.tgz --provenance --access public --tag "$tag"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   github-release:
     needs: [build, npm]
